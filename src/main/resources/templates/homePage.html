@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="homePage.css">
+    <title>Home Page</title>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">
+        <h1>CodeFellows</h1>
+    </div>
+    <ul class="nav-links">
+        <li th:if="!${username}"><a href="/login">Log In</a></li>
+        <li th:if="!${username}"><a href="/signup">Sign Up</a></li>
+        <li th:if="${username}"><a href="/logout">Log Out</a></li>
+        <li th:if="${username}"><a href="/userInfo">Profile</a></li>
+    </ul>
+</nav>
+
+<h1 class="welcome-message" th:if="${username != null}" th:text="'Welcome, ' + ${username}"></h1>
+<h1 class="welcome-message" th:if="${username == null}">Welcome to CodeFellows</h1>
+<p>This is the homepage of our website.</p>
+</body>
+</html>
