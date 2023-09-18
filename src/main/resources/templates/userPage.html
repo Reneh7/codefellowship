@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <link rel="stylesheet" href="userPage.css">
+</head>
+<body>
+<header>
+    <h1>User Profile</h1>
+</header>
+<nav class="navbar">
+    <ul class="navbar-list">
+        <li class="navbar-item"><a class="navbar-link" href="@{/}">Home</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="/logout">Log Out</a></li>
+    </ul>
+</nav>
+<main>
+    <section class="user-info">
+        <h2>User Information</h2>
+        <ul class="info-list">
+            <li class="info-item">
+                <strong>Username:</strong>
+                <span class="info-text" th:text="${user.username}">Placeholder</span>
+            </li>
+            <li class="info-item">
+                <strong>First Name:</strong>
+                <span class="info-text" th:text="${user.firstName}">Placeholder</span>
+            </li>
+            <li class="info-item">
+                <strong>Last Name:</strong>
+                <span class="info-text" th:text="${user.lastName}">Placeholder</span>
+            </li>
+            <li class="info-item">
+                <strong>Date of Birth:</strong>
+                <span class="info-text" th:text="${user.dateOfBirth}">Placeholder</span>
+            </li>
+            <li class="info-item">
+                <strong>Bio:</strong>
+                <span class="info-text" th:text="${user.bio}">Placeholder</span>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+</html>
