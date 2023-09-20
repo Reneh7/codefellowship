@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Page</title>
-    <link rel="stylesheet" href="/css/userPage.css">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/specificUserProfile.css">
 </head>
 <body>
 <header>
@@ -14,6 +14,7 @@
     <ul class="navbar-list">
         <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
         <li class="navbar-item"><a class="navbar-link" th:href="@{/perform_logout}">Log Out</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="/allUsers">All Users</a></li>
     </ul>
 </nav>
 <main>
@@ -23,7 +24,7 @@
             <li class="info-item">
                 <strong>Profile Image</strong>
                 <img th:if="${user.image != null and !user.image.isEmpty()}"
-                     th:src="${user.image}" alt="Profile Image" class="info-image"/>
+                     th:src="${user.image}" alt="Profile Image" class="info-image" />
                 <img th:if="${user.image == null or user.image.isEmpty()}"
                      src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1214428300?k=6&m=1214428300&s=170667a&w=0&h=hMQs-822xLWFz66z3Xfd8vPog333rNFHU6Q_kc9Sues=" alt="Default Image" class="info-image" />
             </li>
@@ -49,19 +50,7 @@
                 <span class="info-text" th:text="${user.bio}">Placeholder</span>
             </li>
         </ul>
-        <button class="edit-button" onclick="window.location.href='/updateProfile'">Edit Profile</button>
     </section>
-
-    <section class="user-posts">
-        <h2>User Posts</h2>
-        <ul class="post-list">
-            <li th:each="post : ${user.posts}">
-                <span th:text="${post.createdAt}"></span>
-                <p th:text="${post.body}"></p>
-            </li>
-        </ul>
-    </section>
-
 </main>
 </body>
 </html>
