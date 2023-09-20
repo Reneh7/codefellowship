@@ -14,24 +14,20 @@ header {
     background-color: #333;
     color: white;
 }
-
 .navbar-list {
     list-style-type: none;
     padding: 0;
     text-align: right;
 }
-
 .navbar-item {
     display: inline;
     margin-right: 20px;
 }
-
 .navbar-link {
     text-decoration: none;
     color: white;
     font-weight: bold;
 }
-
 .navbar-link:hover {
     color: #FFD700;
 }
@@ -70,9 +66,6 @@ main {
     font-weight: normal;
 }
 
-.navbar {
-    margin-bottom: 20px;
-}
 .info-image {
     width: 150px;
     height: 150px;

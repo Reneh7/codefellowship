@@ -17,12 +17,24 @@
         <li th:if="!${username}"><a href="/login">Log In</a></li>
         <li th:if="!${username}"><a href="/signup">Sign Up</a></li>
         <li th:if="${username}"><a th:href="@{/perform_logout}">Log Out</a></li>
-        <li th:if="${username}"><a href="/userInfo">Profile</a></li>
+        <li th:if="${username}"><a href="/myProfile">Profile</a></li>
+        <li th:if="${username}"><a href="/allUsers">All Users</a></li>
     </ul>
 </nav>
 
 <h1 class="welcome-message" th:if="${username != null}" th:text="'Welcome, ' + ${username}"></h1>
 <h1 class="welcome-message" th:if="${username == null}">Welcome to CodeFellows</h1>
 <p>This is the homepage of our website.</p>
+
+<div th:if="${username != null}">
+<h3>Add Posts</h3>
+<form action="/createPost" method="POST">
+    <label for="postBody">Post Content:</label>
+    <textarea id="postBody" name="body" rows="4" cols="50" required></textarea>
+    <br>
+    <button type="submit">Create Post</button>
+</form>
+</div>
+
 </body>
 </html>
