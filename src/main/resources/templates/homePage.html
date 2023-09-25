@@ -9,6 +9,7 @@
     <title>Home Page</title>
 </head>
 <body>
+
 <nav class="navbar">
     <div class="logo">
         <h1>CodeFellows</h1>
@@ -16,9 +17,11 @@
     <ul class="nav-links">
         <li th:if="!${username}"><a href="/login">Log In</a></li>
         <li th:if="!${username}"><a href="/signup">Sign Up</a></li>
-        <li th:if="${username}"><a th:href="@{/perform_logout}">Log Out</a></li>
         <li th:if="${username}"><a href="/myProfile">Profile</a></li>
         <li th:if="${username}"><a href="/allUsers">All Users</a></li>
+        <li th:if="${username}"><a href="/discoverUsers">Discover Users</a></li>
+        <li th:if="${username}"><a href="/feed">My Feed</a></li>
+        <li th:if="${username}"><a th:href="@{/perform_logout}">Log Out</a></li>
     </ul>
 </nav>
 

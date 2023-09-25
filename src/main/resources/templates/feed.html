@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feed</title>
+    <link rel="stylesheet" href="/css/feed.css">
+</head>
+<body>
+<header>
+    <h1>User Feed</h1>
+</header>
+<nav class="navbar">
+    <ul class="navbar-list">
+        <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
+        <li th:if="${username}"><a href="/myProfile">Profile</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="/allUsers">All Users</a></li>
+        <li th:if="${username}"><a href="/discoverUsers">Discover Users</a></li>
+        <li class="navbar-item"><a class="navbar-link" th:href="@{/perform_logout}">Log Out</a></li>
+    </ul>
+</nav>
+<main>
+    <section class="feed">
+        <h2>Your Feed</h2>
+        <ul class="feed-list">
+            <!-- Loop through the feed posts and display them -->
+            <li class="feed-item" th:each="post : ${feedPosts}">
+                <div class="post-content">
+                    <p th:text="${post.body}">Placeholder</p>
+                </div>
+                <!-- Link to user profile -->
+                <a th:href="@{/users/{id}(id=${post.user.id})}">
+                    View Profile
+                </a>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+</html>

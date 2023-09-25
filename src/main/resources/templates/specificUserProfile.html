@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link rel="stylesheet" href="/css/specificUserProfile.css">
+    <link rel="stylesheet" href="/css/shared.css">
 </head>
 <body>
 <header>
@@ -13,8 +14,11 @@
 <nav class="navbar">
     <ul class="navbar-list">
         <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
+        <li th:if="${username}"><a href="/myProfile">Profile</a></li>
+        <li th:if="${username}"><a href="/allUsers">All Users</a></li>
+        <li th:if="${username}"><a href="/discoverUsers">Discover Users</a></li>
+        <li th:if="${username}"><a href="/feed">My Feed</a></li>
         <li class="navbar-item"><a class="navbar-link" th:href="@{/perform_logout}">Log Out</a></li>
-        <li class="navbar-item"><a class="navbar-link" href="/allUsers">All Users</a></li>
     </ul>
 </nav>
 <main>
@@ -51,6 +55,13 @@
             </li>
         </ul>
     </section>
+
+    <div th:unless="${user == null or user.username == null or !user.username.equals(user.username)}">
+        <form th:action="@{/followUser/{userId}(userId=${user.id})}" method="post">
+            <button type="submit" th:text="${user.followedUsers.contains(loggedInUser) ? 'Unfollow' : 'Follow'}"></button>
+        </form>
+    </div>
+
 </main>
 </body>
 </html>

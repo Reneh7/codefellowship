@@ -3,11 +3,8 @@ package com.example.springsecurity.models;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class CodeFellowUsers implements UserDetails {
@@ -21,6 +18,15 @@ public class CodeFellowUsers implements UserDetails {
     private String dateOfBirth;
     private String bio;
     private String image;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_follows",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private Set<CodeFellowUsers> followedUsers;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Posts> posts;
@@ -88,4 +94,6 @@ public class CodeFellowUsers implements UserDetails {
     public String getImage() {return image;}
     public void setImage(String image) {this.image = image;}
     public List<Posts> getPosts() {return posts;}
+    public Set<CodeFellowUsers> getFollowedUsers() {return followedUsers;}
+    public void setFollowedUsers(Set<CodeFellowUsers> followedUsers) {this.followedUsers = followedUsers;}
 }
