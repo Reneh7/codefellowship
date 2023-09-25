@@ -1,7 +1,9 @@
 package com.example.springsecurity.controllers;
 
 import com.example.springsecurity.models.CodeFellowUsers;
+import com.example.springsecurity.models.Posts;
 import com.example.springsecurity.repositories.CodeFellowRepo;
+import com.example.springsecurity.repositories.PostsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,11 +19,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class CodeFellowController {
     @Autowired
     CodeFellowRepo codeFellowRepo;
+
+    @Autowired
+    PostsRepo postsRepo;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -122,13 +129,17 @@ public class CodeFellowController {
     }
 
     @GetMapping("/allUsers")
-    public String allUsers(Principal p,Model m) {
+    public String allUsers(Principal p, Model m) {
+        List<CodeFellowUsers> allUsers = codeFellowRepo.findAll();
         if (p != null) {
             String username = p.getName();
             CodeFellowUsers codeFellowUser = codeFellowRepo.findByUsername(username);
             m.addAttribute("user", codeFellowUser);
+            allUsers = allUsers.stream()
+                    .filter(user -> !user.getId().equals(codeFellowUser.getId()))
+                    .collect(Collectors.toList());
         }
-        List<CodeFellowUsers> allUsers = codeFellowRepo.findAll();
+
         m.addAttribute("users", allUsers);
         return "findUsers";
     }
@@ -139,5 +150,71 @@ public class CodeFellowController {
         m.addAttribute("user", codeFellowUser);
         return "specificUserProfile";
     }
+
+    @GetMapping("/discoverUsers")
+    public String discoverUsers(Principal p, Model m) {
+        CodeFellowUsers codeFellowUser = null;
+        if (p != null) {
+            String username = p.getName();
+            codeFellowUser = codeFellowRepo.findByUsername(username);
+            m.addAttribute("user", codeFellowUser);
+        }
+        List<CodeFellowUsers> allUsers = codeFellowRepo.findAll();
+
+        if (codeFellowUser != null) {
+            final CodeFellowUsers userToExclude = codeFellowUser;
+            allUsers = allUsers.stream()
+                    .filter(user -> !user.getId().equals(userToExclude.getId()))
+                    .collect(Collectors.toList());
+        }
+
+        m.addAttribute("users", allUsers);
+        return "discoverUsers";
+    }
+
+    @PostMapping("/followUser/{userId}")
+    public RedirectView followUser(Principal p, @PathVariable Long userId) {
+        if (p != null) {
+            String username = p.getName();
+            CodeFellowUsers loggedInUser = codeFellowRepo.findByUsername(username);
+            CodeFellowUsers userToFollow = codeFellowRepo.findById(userId).orElse(null);
+
+            if (userToFollow != null) {
+                loggedInUser.getFollowedUsers().add(userToFollow);
+                codeFellowRepo.save(loggedInUser);
+            }
+        }
+        return new RedirectView("/users/" + userId);
+    }
+
+    @PostMapping("/unfollowUser/{userId}")
+    public RedirectView unfollowUser(Principal p, @PathVariable Long userId) {
+        if (p != null) {
+            String username = p.getName();
+            CodeFellowUsers loggedInUser = codeFellowRepo.findByUsername(username);
+            CodeFellowUsers userToUnfollow = codeFellowRepo.findById(userId).orElse(null);
+
+            if (userToUnfollow != null) {
+                loggedInUser.getFollowedUsers().remove(userToUnfollow);
+                codeFellowRepo.save(loggedInUser);
+            }
+        }
+        return new RedirectView("/users/" + userId);
+    }
+
+
+
+    @GetMapping("/feed")
+    public String viewFeed(Principal p, Model m) {
+        if (p != null) {
+            String username = p.getName();
+            CodeFellowUsers loggedInUser = codeFellowRepo.findByUsername(username);
+            Set<CodeFellowUsers> followedUsers = loggedInUser.getFollowedUsers();
+            List<Posts> feedPosts = postsRepo.findByUserInOrderByCreatedAtDesc(followedUsers);
+            m.addAttribute("feedPosts", feedPosts);
+        }
+        return "feed";
+    }
+
 
 }

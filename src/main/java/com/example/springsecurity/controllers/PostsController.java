@@ -37,6 +37,7 @@ public class PostsController {
             CodeFellowUsers codeFellowUser = codeFellowRepo.findByUsername(username);
 
             Posts post = new Posts();
+
             post.setBody(body);
             post.setUser(codeFellowUser);
             post.setCreatedAt(LocalDate.now());
