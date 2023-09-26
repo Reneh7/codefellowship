@@ -12,4 +12,4 @@ addition to using manyTomany relationship and join tables to able the users to f
 - Repositories
 - Html files for login/home/signup/profile/edit/discoverUsers/allUsers pages with their styling
 - error.html
-- fragment directory
+
