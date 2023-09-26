@@ -8,7 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-<h3 th:if="${username}" th:text="'Current User from fragment 1: ' + ${username}"></h3>
-<nav th:if="${username}" th:fragment="user-header" th:text="'Current User from fragment 2: ' + ${username}"></nav>
+<nav class="navbar" th:fragment="user-header">
+    <ul class="nav-links">
+        <li class="navbar-item"><a href="/">Home</a></li>
+        <li class="navbar-item" ><a href="/myProfile">Profile</a></li>
+        <li class="navbar-item"><a href="/allUsers">All Users</a></li>
+        <li class="navbar-item"><a href="/discoverUsers">Discover Users</a></li>
+        <li class="navbar-item"><a href="/feed">My Feed</a></li>
+        <li class="navbar-item"><a th:href="@{/perform_logout}">Log Out</a></li>
+    </ul>
+</nav>
 </body>
 </html>

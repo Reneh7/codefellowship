@@ -19,6 +19,8 @@ public class CodeFellowUsers implements UserDetails {
     private String bio;
     private String image;
 
+    @ManyToMany(mappedBy = "followedUsers")
+    private Set<CodeFellowUsers> followers = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "user_follows",
@@ -26,7 +28,6 @@ public class CodeFellowUsers implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "followed_id")
     )
     private Set<CodeFellowUsers> followedUsers;
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Posts> posts;

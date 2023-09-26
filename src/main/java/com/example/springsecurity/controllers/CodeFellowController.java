@@ -34,7 +34,6 @@ public class CodeFellowController {
 
     @Autowired
     private HttpServletRequest request;
-
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -202,7 +201,24 @@ public class CodeFellowController {
         return new RedirectView("/users/" + userId);
     }
 
+    @PostMapping("/toggleFollow/{userId}")
+    public String toggleFollow(Principal p, @PathVariable Long userId) {
+        if (p != null) {
+            String username = p.getName();
+            CodeFellowUsers loggedInUser = codeFellowRepo.findByUsername(username);
+            CodeFellowUsers userToToggle = codeFellowRepo.findById(userId).orElse(null);
 
+            if (userToToggle != null) {
+                if (loggedInUser.getFollowedUsers().contains(userToToggle)) {
+                    loggedInUser.getFollowedUsers().remove(userToToggle);
+                } else {
+                    loggedInUser.getFollowedUsers().add(userToToggle);
+                }
+                codeFellowRepo.save(loggedInUser);
+            }
+        }
+        return "redirect:/discoverUsers";
+    }
 
     @GetMapping("/feed")
     public String viewFeed(Principal p, Model m) {

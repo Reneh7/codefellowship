@@ -11,16 +11,7 @@
 <header>
     <h1>User Profile</h1>
 </header>
-<nav class="navbar">
-    <ul class="navbar-list">
-        <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
-        <li th:if="${username}"><a href="/myProfile">Profile</a></li>
-        <li th:if="${username}"><a href="/allUsers">All Users</a></li>
-        <li th:if="${username}"><a href="/discoverUsers">Discover Users</a></li>
-        <li th:if="${username}"><a href="/feed">My Feed</a></li>
-        <li class="navbar-item"><a class="navbar-link" th:href="@{/perform_logout}">Log Out</a></li>
-    </ul>
-</nav>
+<div th:replace="/fragments/nav-header :: user-header"></div>
 <main>
     <section class="user-info">
         <h2>User Information</h2>
