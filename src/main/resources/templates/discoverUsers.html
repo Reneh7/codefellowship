@@ -3,42 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Discover Users</title>
     <link rel="stylesheet" href="/css/discoverUsers.css">
-    <link rel="stylesheet" href="/css/shared.css">
 </head>
 <body>
 <header>
     <h1>Discover Users</h1>
 </header>
-<nav class="navbar">
-    <ul class="navbar-list">
-        <li class="navbar-item"><a class="navbar-link" href="/">Home</a></li>
-        <li th:if="${username}"><a href="/myProfile">Profile</a></li>
-        <li class="navbar-item"><a class="navbar-link" href="/allUsers">All Users</a></li>
-        <li th:if="${username}"><a href="/feed">My Feed</a></li>
-        <li class="navbar-item"><a class="navbar-link" th:href="@{/perform_logout}">Log Out</a></li>
-    </ul>
-</nav>
+<div th:replace="/fragments/nav-header :: user-header"></div>
+
 <main>
     <section class="user-list">
         <h2>Users to Discover</h2>
         <ul class="list">
-            <!-- Loop through the users and display them -->
             <li class="list-item" th:each="user : ${users}">
                 <div class="user-info">
                     <strong>Username</strong>
                     <span class="info-text" th:text="${user.username}">Placeholder</span>
                     <strong>First Name</strong>
                     <span class="info-text" th:text="${user.firstName}">Placeholder</span>
-                    <!-- Add a form to follow the user -->
-                    <div th:unless="${user == null or user.username == null or !user.username.equals(user.username)}">
-                        <form th:action="@{/followUser/{userId}(userId=${user.id})}" method="post">
-                            <button type="submit" th:text="${user.followedUsers.contains(loggedInUser) ? 'Unfollow' : 'Follow'}"></button>
-                        </form>
-                    </div>
                 </div>
-            </li>
+                <form th:action="@{'/toggleFollow/' + ${user.id}}" method="post">
+                    <input type="hidden" name="followStatus" th:value="${user.followedUsers.contains(loggedInUser) ? 'true' : 'false'}" />
+                    <button type="submit">
+                        <span th:if="${user.followedUsers.contains(loggedInUser)}">Unfollow</span>
+                        <span th:unless="${user.followedUsers.contains(loggedInUser)}">Follow</span>
+                    </button>
+                </form>
         </ul>
     </section>
 </main>

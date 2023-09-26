@@ -10,30 +10,40 @@ header {
     padding: 20px;
 }
 
-.navbar {
-    background-color: #333;
-    color: white;
+body, h1, h2, ul, li {
+    margin: 0;
+    padding: 0;
 }
 
-.navbar-list {
-    list-style-type: none;
-    padding: 0;
-    text-align: right;
+.navbar {
+    background-color: #007BFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+    margin-bottom: 20px;
 }
 
 .navbar-item {
-    display: inline;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+
+}
+
+.nav-links li {
     margin-right: 20px;
 }
 
-.navbar-link {
+.nav-links a {
     text-decoration: none;
     color: white;
     font-weight: bold;
-}
-
-.navbar-link:hover {
-    color: #FFD700;
 }
 
 main {
@@ -70,9 +80,6 @@ main {
     font-weight: normal;
 }
 
-.navbar {
-    margin-bottom: 20px;
-}
 .info-image {
     width: 150px;
     height: 150px;
